@@ -1,4 +1,4 @@
-import { MENU_LIST } from '@/data/menu-list';
+import { HEADER_MENU } from '@/data/menus-data';
 import Logo from '@/assets/svg/logo.svg';
 
 const Header = () => {
@@ -6,10 +6,13 @@ const Header = () => {
     <header>
       <nav className="grid grid-cols-3">
         <ul className="flex gap-8 pt-1">
-          {MENU_LIST.map((item, index) => (
+          {HEADER_MENU.map((item, index) => (
             <li key={`${index}-${item}`}>
-              <a href="#" className="text-uhGrey">
-                {item}
+              <a
+                href={item.url}
+                className="text-uhGrey hover:text-black transition-colors"
+              >
+                {item.label}
               </a>
             </li>
           ))}
