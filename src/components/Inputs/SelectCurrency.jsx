@@ -28,9 +28,10 @@ const SelectCurrency = ({ currency, setCurrency }) => {
       <button
         className="flex gap-2 items-center bg-white rounded-full py-2 px-4"
         onClick={() => setIsOpen((prev) => !prev)}
+        data-testid="currency-selector"
       >
         <img src={`/flags/${currency}@3x.png`} className="w-6" />
-        <span>{currency}</span>
+        <span data-testid="selected-currency">{currency}</span>
         <img
           src={DropDownIcon}
           className={`w-2 ${isOpen ? 'rotate-180' : ''} `}
@@ -50,6 +51,7 @@ const SelectCurrency = ({ currency, setCurrency }) => {
                   setCurrency(curr);
                   setIsOpen(false);
                 }}
+                data-testid={`currency-${curr}`}
               >
                 <img src={`/flags/${curr}@3x.png`} className="w-6" />
                 <span>{curr}</span>

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const InputNumber = ({ value, setValue }) => {
+const InputNumber = ({ value, setValue, ...rest }) => {
   return (
     <input
       type="number"
@@ -9,6 +9,7 @@ const InputNumber = ({ value, setValue }) => {
       onChange={(e) => setValue(e.target.value)}
       onWheel={(e) => e.target.blur()}
       className="bg-uhAliceBlue w-full px-6 text-5xl h-[78px] rounded-lg"
+      {...rest}
     />
   );
 };

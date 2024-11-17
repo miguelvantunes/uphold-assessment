@@ -6,7 +6,10 @@ import QrCode from '@/assets/svg/qr-code.svg';
 
 const Footer = () => {
   return (
-    <footer className=" border-t py-[70px] mt-10 max-w-[1110px] mx-auto w-full">
+    <footer
+      className=" border-t py-[70px] mt-10 max-w-[1110px] mx-auto w-full"
+      data-testid="footer"
+    >
       <div className="grid grid-cols-[1fr_4fr_1fr]">
         <div>
           <img src={SmallLogo} className=" w-22" />

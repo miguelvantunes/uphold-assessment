@@ -67,7 +67,11 @@ function App() {
 
             <div className="flex flex-col w-[540px] mt-16">
               <div className="relative">
-                <InputAmount value={amount} setValue={setAmount} />
+                <InputAmount
+                  value={amount}
+                  setValue={setAmount}
+                  data-testid="currency-amount"
+                />
                 <div className="absolute right-4 top-5">
                   <SelectCurrency
                     currency={currency}

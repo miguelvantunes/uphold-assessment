@@ -2,7 +2,10 @@ import PropTypes from 'prop-types';
 
 const Message = ({ message }) => {
   return (
-    <div className="flex items-center justify-center mt-7 text-center">
+    <div
+      className="flex items-center justify-center mt-7 text-center"
+      data-testid="exchange-rate-message"
+    >
       {message}
     </div>
   );
@@ -13,7 +16,7 @@ Message.propTypes = {
 };
 
 const ExchangeRates = ({ amount, rates }) => {
-  if (!amount) {
+  if (!amount || amount === '0') {
     return <Message message="Enter an amount to check the rates" />;
   }
 
@@ -22,13 +25,14 @@ const ExchangeRates = ({ amount, rates }) => {
   }
 
   if (rates?.length === 0) {
-    return (
-      <Message message="Houston, we have a problem. We cannot calculate the rates for this currency." />
-    );
+    return <Message message="Houston, we have a problem fetching problem." />;
   }
 
   return (
-    <ul className="flex flex-col mt-10 px-6 gap-8 pr-12">
+    <ul
+      className="flex flex-col mt-10 px-6 gap-8 pr-12"
+      data-testid="exchange-rate-list"
+    >
       {rates.map((rate, index) => (
         <li key={index} className="flex justify-between items-center">
           <span className="text-2xl">{(rate.ask * amount).toFixed(3)}</span>

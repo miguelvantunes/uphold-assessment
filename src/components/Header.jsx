@@ -3,7 +3,7 @@ import Logo from '@/assets/svg/logo.svg';
 
 const Header = () => {
   return (
-    <header>
+    <header data-testid="header">
       <nav className="grid grid-cols-3">
         <ul className="flex gap-8 pt-1">
           {HEADER_MENU.map((item, index) => (
