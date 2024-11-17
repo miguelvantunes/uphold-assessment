@@ -9,6 +9,7 @@ import { CURRENCY_LIST } from '@/data/currency-list';
 import SelectCurrency from './components/Inputs/SelectCurrency';
 
 const DEFAULT_CURRENCY = 'USD';
+const EXPIRE_CACHE_TIME = 10000;
 
 function App() {
   const [amount, setAmount] = useState('');
@@ -31,11 +32,12 @@ function App() {
           )
           .slice(0, 10);
 
-        console.log(filteredRates);
-
         setCachedExchangeRates((prevRates) => ({
           ...prevRates,
-          [debouncedCurrency]: filteredRates,
+          [debouncedCurrency]: {
+            rates: filteredRates,
+            expireAt: Date.now() + EXPIRE_CACHE_TIME,
+          },
         }));
       } catch (error) {
         console.error('Error fetching exchange rates:', error);
@@ -43,11 +45,11 @@ function App() {
       }
     };
 
-    if (debouncedAmount && !cachedExchangeRates[debouncedCurrency]) {
-      console.log('CALL FETCH');
+    if (
+      (debouncedAmount && !cachedExchangeRates[debouncedCurrency]) ||
+      cachedExchangeRates[debouncedCurrency]?.expireAt < Date.now()
+    ) {
       fetchExchangeRates();
-    } else {
-      console.log('DO NOT CALL FETCH');
     }
   }, [debouncedAmount, debouncedCurrency, cachedExchangeRates]);
 
@@ -76,7 +78,11 @@ function App() {
 
               <ExchangeRates
                 amount={amount}
-                rates={fetchError ? [] : cachedExchangeRates[debouncedCurrency]}
+                rates={
+                  fetchError
+                    ? []
+                    : cachedExchangeRates[debouncedCurrency]?.rates || null
+                }
               />
             </div>
           </div>
