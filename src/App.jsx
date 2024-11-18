@@ -46,8 +46,9 @@ function App() {
     };
 
     if (
-      (debouncedAmount && !cachedExchangeRates[debouncedCurrency]) ||
-      cachedExchangeRates[debouncedCurrency]?.expireAt < Date.now()
+      debouncedAmount &&
+      (!cachedExchangeRates[debouncedCurrency] ||
+        cachedExchangeRates[debouncedCurrency]?.expireAt < Date.now())
     ) {
       fetchExchangeRates();
     }

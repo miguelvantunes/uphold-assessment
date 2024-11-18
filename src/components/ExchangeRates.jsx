@@ -25,7 +25,7 @@ const ExchangeRates = ({ amount, rates }) => {
   }
 
   if (rates?.length === 0) {
-    return <Message message="Houston, we have a problem fetching problem." />;
+    return <Message message="Houston, we have a fetching problem." />;
   }
 
   return (

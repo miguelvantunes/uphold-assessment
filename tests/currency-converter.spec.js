@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { MOCK_GET_TICKER_FROM_SDK } from './mocks/mock-ticker-data';
 
 const selectCurrency = async (page, currency) => {
   const currencySelector = page.getByTestId('currency-selector');
@@ -28,8 +29,6 @@ test.describe('Currency Converter App', () => {
 
     await amountInput.fill('5.3');
     await expect(amountInput).toHaveValue('5.3');
-
-    await page.waitForTimeout(3000);
   });
 
   test('should allow change currency', async ({ page }) => {
@@ -67,7 +66,7 @@ test.describe('Currency Converter App', () => {
 
     const exchangeRateMessage = page.getByTestId('exchange-rate-message');
     await expect(exchangeRateMessage).toHaveText(
-      'Houston, we have a problem fetching problem.'
+      'Houston, we have a fetching problem.'
     );
   });
 
@@ -78,7 +77,14 @@ test.describe('Currency Converter App', () => {
     const amountInput = page.getByTestId('currency-amount');
     await amountInput.fill('300');
 
-    await page.waitForTimeout(10000);
+    await page.route('**/v0/ticker/EUR', (route) => {
+      console.log(`Intercepted: ${route.request().url()}`);
+      route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify(MOCK_GET_TICKER_FROM_SDK),
+      });
+    });
 
     const exchangeRates = page.getByTestId('exchange-rate-list');
     await expect(exchangeRates).toBeVisible();

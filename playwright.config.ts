@@ -5,7 +5,8 @@ export default defineConfig({
   fullyParallel: true,
   retries: 1,
   reporter: 'html',
-  timeout: 30000,
+  timeout: 5000,
+
   use: {
     baseURL: 'http://localhost:5173/',
     screenshot: 'on',
